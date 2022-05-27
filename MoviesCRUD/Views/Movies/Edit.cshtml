@@ -1,0 +1,54 @@
+﻿@model MoviesCRUD.Models.Movie
+
+@{
+    ViewData["Title"] = "Edit";
+    List<Person> persons = ViewBag.persons;
+    List<Genre> genres = ViewBag.genres;
+}
+
+<h1>Edit</h1>
+
+<h4>Movie</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                  <label asp-for="persons">Choose a person:</label>
+                  <select asp-for="persons" class="form-control" multiple>
+                          @foreach(var obj in persons)
+                            {
+                                <option value="@obj" selected="@Model.persons.Contains(obj)==true">@obj.Name</option>
+                            }
+                  </select>
+            </div>
+            <div class="form-group">
+                  <label asp-for="genres">Choose a genre:</label>
+                  <select asp-for="genres" class="form-control" multiple>
+                          @foreach(var obj in genres)
+                            {
+                                <option value="@obj" selected="@Model.genres.Contains(obj)==true">@obj.Name</option>
+                            }
+                  </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-outline-success">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
